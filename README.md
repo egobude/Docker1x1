@@ -8,6 +8,6 @@
    
 ### Start the container
    
-    $ docker run -d -p 82:80 -v $(pwd):/usr/share/nginx/html nginx:1.13-alpine
+    $ docker-compose up -d
     
-And go to [http://0.0.0.0:82](http://0.0.0.0:82)
+And go to [http://0.0.0.0:85](http://0.0.0.0:85)
