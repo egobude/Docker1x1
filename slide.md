@@ -7,11 +7,11 @@ layout: true
 
 ## Was ist Docker?
 
-Docker ist eine leichtgewichtige Alternative, die Containervirtualisierung unter Linux nutzt und so die Vorteile von virtuellen Maschinen ohne die Nachteile erreicht. 
+[Docker](https://docs.docker.com/reference/) ist eine leichtgewichtige Alternative, die Containervirtualisierung unter Linux nutzt und so die Vorteile von virtuellen Maschinen ohne die Nachteile erreicht. 
 
 ### Dockerfile
 
-Eine Textdatei, die Befehle enthält, um ein Image zu erstellen.
+Eine [Textdatei](https://docs.docker.com/engine/reference/builder/), die Befehle enthält, um ein Image zu erstellen ([Beispiel Dockerfile](https://github.com/docker-library/wordpress/blob/3a1ca61731e6070764d5b7235e3b6617798b8af8/php5.6/apache/Dockerfile)). 
 
 ### Image 
 
@@ -25,7 +25,7 @@ Ein Container ist ein lauffähiges, virtuelles Betriebssystem.
 
 ## Docker Befehle
 
-**Nützliche Docker Befehle:**
+Nützliche Docker Befehle:
 
 ```bash
 $ docker build - Baut ein Image auf Basis eines Dockerfiles
@@ -37,10 +37,12 @@ $ docker run - Startet einen Container auf Basis eines Images
 $ docker exec - Führt einen Befehl in einem laufenden Container aus
 $ docker restart - Startet einen Container neu
 $ docker images - Listet alle auf dem Host verfügbaren Images auf
-$ docker help - Übersicht aller Befehle
 ```
 
-[https://docs.docker.com/engine/reference/commandline/cli/](https://docs.docker.com/engine/reference/commandline/cli/)
+**Weiterführende Links:**
+
+* [Dockerhub - Offizielle Docker Registry](https://hub.docker.com/)
+* [Übersicht aller Befehle](https://docs.docker.com/engine/reference/commandline/docker/)
 
 ---
 
@@ -48,34 +50,40 @@ $ docker help - Übersicht aller Befehle
 
 Mit dem `docker-compose` Befehl kann man definieren wie man Container starten will und wie diese Container in Beziehung stehen sollen. Des Weiteren kann man Verzeichnisse, Ports und Verlinkungen definieren. 
 
+**Weiterführende Links:**
+
+* [Dokumentation zu Docker Compose](https://docs.docker.com/compose/)
+* [Übersicht aller Befehle](https://docs.docker.com/compose/reference/overview/)
+
 ---
 
 ## Beispiel einer docker-compose.yml
  
-```yml
+```bash
 version: "2"
 
-services:
-  nginx:
-    image: nginx:1.13-alpine
-    ports:
-      - 80:80
-    volumes_from:
-      - php
-    
-  php:
-    image: php:7.1-fpm-alpine              
-    volumes:
-      - "./Data:/data"
+services: 
+
+    php:
+      image: php:7.1-fpm-alpine              
+      volumes:
+        - "./Data:/data"
+        
+    nginx:
+      image: nginx:1.13-alpine
+      ports:
+        - 80:80
+      volumes_from:
+        - php
 ```
 
 ---
 
-## Docker based development setup
+### Docker based development setup
 
 Vorlage für eine auf Docker basierende [Entwicklungsumgebung](https://github.com/egobude/docker-project-template).
 
-### Verwendung:
+#### Verwendung:
 
 ```bash
 $ git clone https://github.com/egobude/docker-project-template.git
@@ -89,7 +97,7 @@ Das Projekt erreicht ihr dann unter [http://<YOUR_IP_ADRESS:1234](http://<YOUR_I
 
 ---
 
-## Sicherung / Snapshot von einem Container erstellen
+### Sicherung / Snapshot von einem Container erstellen
 
 Wenn man mal einen Container sichern muss, kann man das wie folgt machen:
 
@@ -98,8 +106,6 @@ $ docker commit CONTAINER_ID_OR_NAME image-backup:$(date +%Y-%m-%d-%H-%M-%S)
 ```
         
 ---
-
-## Backups
 
 ### Backup von Container-Volumes
 
@@ -117,7 +123,7 @@ docker run --rm --link=my_container:db --volumes=$(pwd)/backup:/backup mysql:lat
 
 ---
 
-## Dateien aus und in einen Container kopieren
+### Dateien aus und in den Container kopieren
 
 Wenn ihr mal eine Datei aus einem Container benötigt oder einen Hotfix einspielen müsst, dann könnt ihr das wie folgt machen:
 
@@ -135,7 +141,7 @@ docker cp /datei/auf/dem/host CONTAINER:/datei/im/container
 
 ---
 
-## Docker Image manuell auf einen Server kopieren
+### Docker Image manuell auf einen Server kopieren
 
 Manchmal kann es vorkommen, dass man von einem Docker-Host nicht auf die interne Registry zugreifen darf. Dann funktionieren solche Befehle wie `docker pull` oder `docker push` nicht mehr. Das lässt sich wie folgt umgehen:
 
